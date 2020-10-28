@@ -1,6 +1,8 @@
 import os
 
-SARS_N_INPUT_FILENAME = "SARS_N.txt"
+SARS_N_FILENAME = "SARS_N.txt"
+COVID19_N_FILENAME = "Covid19_N.txt"
+
 
 def fileToString(filename):
 	inputFile = open(filename, "r")
@@ -12,4 +14,6 @@ def fileToString(filename):
 		CompleteString = CompleteString + workingString
 	return CompleteString
 
-print(fileToString(SARS_N_INPUT_FILENAME))
+sars_n_string = fileToString(SARS_N_FILENAME)
+covid_n_string = fileToString(COVID19_N_FILENAME)
+
