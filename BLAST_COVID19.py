@@ -62,12 +62,14 @@ def recursiveAlignmentLine( DTLF, lengthItr, widthItr):
 	#go top
 	elif(maxScore == topScore):
 		print("Top")
+		print(lengthItr, widthItr)
 		recursiveAlignmentLine("T", lengthItr - 1, widthItr)
 		sequence1Alignment = sequence1Alignment + sequence1[lengthItr - 1]
 		sequence2Alignment = sequence2Alignment + "_"
 	#go left
 	elif(maxScore == leftScore):
 		print("Left")
+		print(lengthItr, widthItr)
 		recursiveAlignmentLine("L", lengthItr, widthItr - 1)
 		sequence1Alignment = sequence1Alignment + "_"
 		sequence2Alignment = sequence2Alignment + sequence2[widthItr - 1]
@@ -78,8 +80,10 @@ MISMATCH_SCORE = -3
 GAP_SCORE = -4
 MATCH_SCORE = 1
 
-sequence2 = "ACGGCTC"
-sequence1 = "ATGGCCTC"
+#sequence2 = "ACGGCTC"
+#sequence1 = "ATGGCCTC"
+sequence2 = "ACCG"
+sequence1 = "ATG"
 
 matrix_length = len(sequence1) + 1
 matrix_width = len(sequence2) + 1 
@@ -113,11 +117,11 @@ for lengthItr in range(1, matrix_length):
 			matchScore = MISMATCH_SCORE
 
 		#Compare top left and diagonal to see which one is max score
-		maxScore = max(diagonalScore, leftScore)
-		maxScore = max(maxScore, topScore)
+		maxScore = max(diagonalScore + matchScore, leftScore + GAP_SCORE)
+		maxScore = max(maxScore, topScore + GAP_SCORE)
 
 		#set matrix place to maxScore and matchScore
-		allignment_matrix[lengthItr][widthItr] = maxScore + matchScore
+		allignment_matrix[lengthItr][widthItr] = maxScore
 
 lengthIndex = matrix_length - 1
 widthIndex = matrix_width - 1
