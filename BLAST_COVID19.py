@@ -48,8 +48,6 @@ def recursiveAlignmentLine( DTLF, lengthItr, widthItr):
 	if diagonalScore is None:
 		diagonalScore = allignment_matrix[lengthItr - 1][widthItr - 1]
 
-	print(leftScore, "This is diag score")
-	
 	maxScore = max(diagonalScore, leftScore)
 	maxScore = max(maxScore, topScore)
 
