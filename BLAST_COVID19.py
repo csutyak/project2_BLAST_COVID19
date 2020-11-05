@@ -47,12 +47,16 @@ def recursiveAlignmentLine( DTLF, lengthItr, widthItr):
 
 	if diagonalScore is None:
 		diagonalScore = allignment_matrix[lengthItr - 1][widthItr - 1]
+
+	print(leftScore, "This is diag score")
 	
 	maxScore = max(diagonalScore, leftScore)
 	maxScore = max(maxScore, topScore)
 
+	currentScore = allignment_matrix[lengthItr][widthItr]
+
 	#go diagonal
-	if(maxScore == diagonalScore):
+	if (currentScore == diagonalScore + MATCH_SCORE) or (currentScore == diagonalScore + MISMATCH_SCORE):
 		print("dia")
 		print(lengthItr, widthItr)
 		recursiveAlignmentLine("D", lengthItr - 1, widthItr - 1)
@@ -60,14 +64,14 @@ def recursiveAlignmentLine( DTLF, lengthItr, widthItr):
 		sequence2Alignment = sequence2Alignment + sequence2[widthItr - 1]
 
 	#go top
-	elif(maxScore == topScore):
+	elif currentScore == topScore + GAP_SCORE or leftScore == LOW_SCORE:
 		print("Top")
 		print(lengthItr, widthItr)
 		recursiveAlignmentLine("T", lengthItr - 1, widthItr)
 		sequence1Alignment = sequence1Alignment + sequence1[lengthItr - 1]
 		sequence2Alignment = sequence2Alignment + "_"
 	#go left
-	elif(maxScore == leftScore):
+	elif maxScore == leftScore + GAP_SCORE or topScore == LOW_SCORE:
 		print("Left")
 		print(lengthItr, widthItr)
 		recursiveAlignmentLine("L", lengthItr, widthItr - 1)
@@ -76,14 +80,16 @@ def recursiveAlignmentLine( DTLF, lengthItr, widthItr):
 
 	
 
-MISMATCH_SCORE = -3
-GAP_SCORE = -4
+MISMATCH_SCORE = -1
+GAP_SCORE = -2
 MATCH_SCORE = 1
 
 #sequence2 = "ACGGCTC"
 #sequence1 = "ATGGCCTC"
 sequence2 = "ACCG"
 sequence1 = "ATG"
+#sequence2 = "AAACCC"
+#sequence1 = "ACCC"
 
 matrix_length = len(sequence1) + 1
 matrix_width = len(sequence2) + 1 
