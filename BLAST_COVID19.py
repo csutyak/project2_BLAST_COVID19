@@ -89,12 +89,12 @@ MISMATCH_SCORE = -1
 GAP_SCORE = -2
 MATCH_SCORE = 1
 
-sequence2 = "ACGGCTC"
-sequence1 = "ATGGCCTC"
+#sequence2 = "ACGGCTC"
+#sequence1 = "ATGGCCTC"
 #sequence2 = "ACCG"
 #sequence1 = "ATG"
-#sequence2 = "AAACCC"
-#sequence1 = "ACCC"
+sequence2 = sars_n_string
+sequence1 = covid_n_string
 
 matrix_length = len(sequence1) + 1
 matrix_width = len(sequence2) + 1 
