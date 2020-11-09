@@ -93,10 +93,65 @@ MISMATCH_SCORE = -1
 GAP_SCORE = -2
 MATCH_SCORE = 1
 
+
+
+
+
+
+
+
+codonTable = {
+    'ATA': 'I', 'ATC': 'I', 'ATT': 'I', 'ATG': 'M',
+    'ACA': 'T', 'ACC': 'T', 'ACG': 'T', 'ACT': 'T',
+    'AAC': 'N', 'AAT': 'N', 'AAA': 'K', 'AAG': 'K',
+    'AGC': 'S', 'AGT': 'S', 'AGA': 'R', 'AGG': 'R',
+    'CTA': 'L', 'CTC': 'L', 'CTG': 'L', 'CTT': 'L',
+    'CCA': 'P', 'CCC': 'P', 'CCG': 'P', 'CCT': 'P',
+    'CAC': 'H', 'CAT': 'H', 'CAA': 'Q', 'CAG': 'Q',
+    'CGA': 'R', 'CGC': 'R', 'CGG': 'R', 'CGT': 'R',
+    'GTA': 'V', 'GTC': 'V', 'GTG': 'V', 'GTT': 'V',
+    'GCA': 'A', 'GCC': 'A', 'GCG': 'A', 'GCT': 'A',
+    'GAC': 'D', 'GAT': 'D', 'GAA': 'E', 'GAG': 'E',
+    'GGA': 'G', 'GGC': 'G', 'GGG': 'G', 'GGT': 'G',
+    'TCA': 'S', 'TCC': 'S', 'TCG': 'S', 'TCT': 'S',
+    'TTC': 'F', 'TTT': 'F', 'TTA': 'L', 'TTG': 'L',
+    'TAC': 'Y', 'TAT': 'Y', 'TAA': '_', 'TAG': '_',
+    'TGC': 'C', 'TGT': 'C', 'TGA': '_', 'TGG': 'W',
+}
+
+sars_codons = [(sars_n_string[x:x + 3]) for x in range(0, len(sars_n_string), 3)]
+
+for x in range(len(sars_codons)):
+    sars_codons[x] = codonTable[sars_codons[x]]
+
+sars_codons_string = ''
+
+for x in sars_codons:
+    sars_codons_string += x
+
+covid_codons = [(covid_n_string[x:x + 3]) for x in range(0, len(covid_n_string), 3)]
+
+for x in range(len(covid_codons)):
+    covid_codons[x] = codonTable[covid_codons[x]]
+
+covid_codons_string = ''
+
+for x in covid_codons:
+    covid_codons_string += x
+
+
+
+
+
+
+
+
+
+
 # sequence2 = "ACGGCTC"
 # sequence1 = "ATGGCCTC"
-sequence2 = "ACCG"
-sequence1 = "ATG"
+sequence2 = covid_codons_string
+sequence1 = sars_codons_string
 #sequence2 = sars_n_string
 #sequence1 = covid_n_string
 
@@ -142,7 +197,7 @@ lengthIndex = matrix_length - 1
 widthIndex = matrix_width - 1
 sequence1Alignment = ""
 sequence2Alignment = ""
-# recursiveAlignmentLine("F", lengthIndex, widthIndex)
+recursiveAlignmentLine("F", lengthIndex, widthIndex)
 
 print(allignment_matrix)
 
@@ -153,46 +208,5 @@ print(sequence2Alignment)
 # Start == "ATG"
 # Stop == "TAA" or "TAG" or "TGA"
 
-codonTable = {
-    'ATA': 'I', 'ATC': 'I', 'ATT': 'I', 'ATG': 'M',
-    'ACA': 'T', 'ACC': 'T', 'ACG': 'T', 'ACT': 'T',
-    'AAC': 'N', 'AAT': 'N', 'AAA': 'K', 'AAG': 'K',
-    'AGC': 'S', 'AGT': 'S', 'AGA': 'R', 'AGG': 'R',
-    'CTA': 'L', 'CTC': 'L', 'CTG': 'L', 'CTT': 'L',
-    'CCA': 'P', 'CCC': 'P', 'CCG': 'P', 'CCT': 'P',
-    'CAC': 'H', 'CAT': 'H', 'CAA': 'Q', 'CAG': 'Q',
-    'CGA': 'R', 'CGC': 'R', 'CGG': 'R', 'CGT': 'R',
-    'GTA': 'V', 'GTC': 'V', 'GTG': 'V', 'GTT': 'V',
-    'GCA': 'A', 'GCC': 'A', 'GCG': 'A', 'GCT': 'A',
-    'GAC': 'D', 'GAT': 'D', 'GAA': 'E', 'GAG': 'E',
-    'GGA': 'G', 'GGC': 'G', 'GGG': 'G', 'GGT': 'G',
-    'TCA': 'S', 'TCC': 'S', 'TCG': 'S', 'TCT': 'S',
-    'TTC': 'F', 'TTT': 'F', 'TTA': 'L', 'TTG': 'L',
-    'TAC': 'Y', 'TAT': 'Y', 'TAA': '_', 'TAG': '_',
-    'TGC': 'C', 'TGT': 'C', 'TGA': '_', 'TGG': 'W',
-}
 
-sars_codons = [(sars_n_string[x:x + 3]) for x in range(0, len(sars_n_string), 3)]
 
-for x in range(len(sars_codons)):
-    sars_codons[x] = codonTable[sars_codons[x]]
-
-sars_codons_string = ''
-
-for x in sars_codons:
-    sars_codons_string += x
-
-covid_codons = [(covid_n_string[x:x + 3]) for x in range(0, len(covid_n_string), 3)]
-
-for x in range(len(covid_codons)):
-    covid_codons[x] = codonTable[covid_codons[x]]
-
-covid_codons_string = ''
-
-for x in covid_codons:
-    covid_codons_string += x
-
-print(sars_codons)
-print(sars_codons_string)
-print(covid_codons)
-print(covid_codons_string)
