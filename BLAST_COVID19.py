@@ -124,12 +124,12 @@ def findIndels(sequence1, sequence2):
     return indelsDict
 
 
-def findBaseMutations(mutationsDict, sequence1, sequence2):
+def findBaseMutations(indelsDict, sequence1, sequence2):
     synonymousCount = 0
     nonSynonymousCount = 0
     for x in range(len(sequence1)):
         if sequence1[x] != sequence2[x]:
-            if (x//3) in mutationsDict:
+            if (x//3) in indelsDict:
                 nonSynonymousCount += 1
             else:
                 synonymousCount += 1
