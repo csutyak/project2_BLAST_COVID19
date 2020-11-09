@@ -94,37 +94,34 @@ GAP_SCORE = -2
 MATCH_SCORE = 1
 
 
-def findCodonMutations(sequence1, sequence2):
+def findIndels(sequence1, sequence2):
     totalInsertions = 0
     totalDeletions = 0
     totalPointMutations = 0
-    totalMutations = 0
+    totalIndels = 0
 
-    mutationDict = dict()
+    indelsDict = dict()
 
     for x in range(len(sequence1)):
         if sequence1[x] != sequence2[x]:
             if sequence1[x] == '_':
-                print("Insertion at position ", x)
-                totalMutations += 1
+                totalIndels += 1
                 totalInsertions += 1
-                mutationDict[x] = 1
+                indelsDict[x] = 1
             elif sequence2[x] == '_':
-                print("Deletion at position ", x)
-                totalMutations += 1
+                totalIndels += 1
                 totalDeletions += 1
-                mutationDict[x] = 1
+                indelsDict[x] = 1
             else:
-                print("Point mutation at position ", x)
-                totalMutations += 1
+                totalIndels += 1
                 totalPointMutations += 1
-                mutationDict[x] = 1
+                indelsDict[x] = 1
 
     print("Total insertions: ", totalInsertions)
     print("Total deletions: ", totalDeletions)
     print("Total point mutations: ", totalPointMutations)
-    print("Total mutations: ", totalMutations)
-    return mutationDict
+    print("Total indels: ", totalIndels)
+    return indelsDict
 
 
 def findBaseMutations(mutationsDict, sequence1, sequence2):
@@ -230,14 +227,14 @@ sequence1Alignment = ""
 sequence2Alignment = ""
 recursiveAlignmentLine("F", lengthIndex, widthIndex)
 
-mutationsDict = findCodonMutations(sequence1Alignment, sequence2Alignment)
+indelsDict = findIndels(sequence1Alignment, sequence2Alignment)
 
 #Fake alignments have mutations at postion 8, 22, 34 when counting from 0
 #This mimics the codon mutations at position 7 and 11
 #The first mutation should be synonymous, the other two are non synonymous
 fakeAlignment1 = "AAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAIA"
 fakeAlignment2 = "AAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-findBaseMutations(mutationsDict, fakeAlignment1, fakeAlignment2)
+findBaseMutations(indelsDict, fakeAlignment1, fakeAlignment2)
 
 print(allignment_matrix)
 
