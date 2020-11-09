@@ -3,8 +3,10 @@ import numpy as np
 
 SARS_N_FILENAME = "SARS_N.txt"
 COVID19_N_FILENAME = "Covid19_N.txt"
-BLASTALIGNMENT_FILENAME1 = "BlastAlignment1.txt"
-BLASTALIGNMENT_FILENAME2 = "BlastAlignment2.txt"
+BLASTALIGNMENT_CODON_FILENAME1 = "BlastAlignment1.txt"
+BLASTALIGNMENT_CODON_FILENAME2 = "BlastAlignment2.txt"
+BLASTALIGNMENT_GENE_FILENAME1 = "BlastAlignmentGene1.txt"
+BLASTALIGNMENT_GENE_FILENAME2 = "BlastAlignmentGene2.txt"
 
 def fileToString(filename):
     inputFile = open(filename, "r")
@@ -15,7 +17,6 @@ def fileToString(filename):
         workingString = workingString.replace("\n", "")
         CompleteString = CompleteString + workingString
     return CompleteString
-
 
 sars_n_string = fileToString(SARS_N_FILENAME)
 covid_n_string = fileToString(COVID19_N_FILENAME)
@@ -64,7 +65,7 @@ def findBaseMutations(indelsDict, sequence1, sequence2):
     print("Total synonymous mutations: ", synonymousCount)
     print("Total non-synonymous mutations: ", nonSynonymousCount)
     print("Total mutations: ", totalMutations)
-    print("Percent difference: ", 1 - totalMutations / len(sequence1))
+    print("Percent identical: ", 1 - totalMutations / len(sequence1))
 
 codonTable = {
     'ATA': 'I', 'ATC': 'I', 'ATT': 'I', 'ATG': 'M',
@@ -260,8 +261,11 @@ if showCodonOutput:
     print(codon2Alignment)
 
 if showBlastOutput:
-    blastAlignment1 = fileToString(BLASTALIGNMENT_FILENAME1)
-    blastAlignment2 = fileToString(BLASTALIGNMENT_FILENAME2)
+    blastAlignment1Codon = fileToString(BLASTALIGNMENT_CODON_FILENAME1)
+    blastAlignment2Codon = fileToString(BLASTALIGNMENT_CODON_FILENAME2)
 
-    blastIndelsDict = findIndels(blastAlignment1, blastAlignment2)
-    findBaseMutations(blastIndelsDict, blastAlignment1, blastAlignment1)
+    blastAlignment1Gene = fileToString(BLASTALIGNMENT_GENE_FILENAME1)
+    blastAlignment2Gene = fileToString(BLASTALIGNMENT_GENE_FILENAME2)
+
+    blastIndelsDict = findIndels(blastAlignment1Codon, blastAlignment2Codon)
+    findBaseMutations(blastIndelsDict, blastAlignment1Gene, blastAlignment2Gene)
