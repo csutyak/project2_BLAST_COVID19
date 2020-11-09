@@ -218,36 +218,32 @@ def createAlignmentMatrix(sequence1, sequence2):
 
     return allignment_matrix, sequence1Alignment, sequence2Alignment
 
-sars_codons = [(sars_n_string[x:x + 3]) for x in range(0, len(sars_n_string), 3)]
+def convertToCodons (sequence):
+    codon_list = [(sequence[x:x + 3]) for x in range(0, len(sequence), 3)]
 
-for x in range(len(sars_codons)):
-    sars_codons[x] = codonTable[sars_codons[x]]
+    for x in range(len(codon_list)):
+        codon_list[x] = codonTable[codon_list[x]]
 
-sars_codons_string = ''
+    codon_string = ''
 
-for x in sars_codons:
-    sars_codons_string += x
+    for x in codon_list:
+        codon_string += x
 
-covid_codons = [(covid_n_string[x:x + 3]) for x in range(0, len(covid_n_string), 3)]
+    return codon_string
 
-for x in range(len(covid_codons)):
-    covid_codons[x] = codonTable[covid_codons[x]]
 
-covid_codons_string = ''
-
-for x in covid_codons:
-    covid_codons_string += x
+sars_codons_string = convertToCodons(sars_n_string)
+covid_codons_string = convertToCodons(covid_n_string)
 
 gene_alignment_matrix, gene1Alignment, gene2Alignment = createAlignmentMatrix(sars_n_string, covid_n_string)
 codon_alignment_matrix, codon1Alignment, codon2Alignment = createAlignmentMatrix(sars_codons_string, covid_codons_string)
 
 indelsDict = findIndels(codon1Alignment, codon2Alignment)
-
 findBaseMutations(indelsDict, gene1Alignment, gene2Alignment)
 
 showGeneAlignment = False
 showCodonOutput = False
-showBlastOutput = True
+showBlastOutput = False
 
 print()
 print("Gene matrix and alignment")
@@ -269,6 +265,4 @@ if showBlastOutput:
 
     blastIndelsDict = findIndels(blastAlignment1, blastAlignment2)
     findBaseMutations(blastIndelsDict, blastAlignment1, blastAlignment1)
-    
-
 
