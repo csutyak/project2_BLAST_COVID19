@@ -59,8 +59,11 @@ def findBaseMutations(indelsDict, sequence1, sequence2):
             else:
                 synonymousCount += 1
 
+    totalMutations = synonymousCount + nonSynonymousCount
     print("Total synonymous mutations: ", synonymousCount)
     print("Total non-synonymous mutations: ", nonSynonymousCount)
+    print("Total mutations: ", totalMutations)
+    print("Percent difference: ", 1 - totalMutations / len(sequence1))
 
 codonTable = {
     'ATA': 'I', 'ATC': 'I', 'ATT': 'I', 'ATG': 'M',
