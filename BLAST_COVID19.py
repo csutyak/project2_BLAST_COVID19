@@ -100,26 +100,45 @@ def findCodonMutations(sequence1, sequence2):
     totalPointMutations = 0
     totalMutations = 0
 
+    mutationDict = dict()
+
     for x in range(len(sequence1)):
         if sequence1[x] != sequence2[x]:
             if sequence1[x] == '_':
                 print("Insertion at position ", x)
                 totalMutations += 1
                 totalInsertions += 1
+                mutationDict[x] = 1
             elif sequence2[x] == '_':
                 print("Deletion at position ", x)
                 totalMutations += 1
                 totalDeletions += 1
+                mutationDict[x] = 1
             else:
                 print("Point mutation at position ", x)
                 totalMutations += 1
                 totalPointMutations += 1
+                mutationDict[x] = 1
 
     print("Total insertions: ", totalInsertions)
     print("Total deletions: ", totalDeletions)
     print("Total point mutations: ", totalPointMutations)
     print("Total mutations: ", totalMutations)
+    return mutationDict
 
+
+def findBaseMutations(mutationsDict, sequence1, sequence2):
+    synonymousCount = 0
+    nonSynonymousCount = 0
+    for x in range(len(sequence1)):
+        if sequence1[x] != sequence2[x]:
+            if (x//3) in mutationsDict:
+                nonSynonymousCount += 1
+            else:
+                synonymousCount += 1
+
+    print("Total synonymous mutations: ", synonymousCount)
+    print("Total non-synonymous mutations: ", nonSynonymousCount)
 
 codonTable = {
     'ATA': 'I', 'ATC': 'I', 'ATT': 'I', 'ATG': 'M',
@@ -211,7 +230,14 @@ sequence1Alignment = ""
 sequence2Alignment = ""
 recursiveAlignmentLine("F", lengthIndex, widthIndex)
 
-findCodonMutations(sequence1Alignment, sequence2Alignment)
+mutationsDict = findCodonMutations(sequence1Alignment, sequence2Alignment)
+
+#Fake alignments have mutations at postion 8, 22, 34 when counting from 0
+#This mimics the codon mutations at position 7 and 11
+#The first mutation should be synonymous, the other two are non synonymous
+fakeAlignment1 = "AAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAIA"
+fakeAlignment2 = "AAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+findBaseMutations(mutationsDict, fakeAlignment1, fakeAlignment2)
 
 print(allignment_matrix)
 
