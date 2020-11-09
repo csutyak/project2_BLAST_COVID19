@@ -3,7 +3,8 @@ import numpy as np
 
 SARS_N_FILENAME = "SARS_N.txt"
 COVID19_N_FILENAME = "Covid19_N.txt"
-
+BLASTALIGNMENT_FILENAME1 = "BlastAlignment1.txt"
+BLASTALIGNMENT_FILENAME2 = "BlastAlignment2.txt"
 
 def fileToString(filename):
     inputFile = open(filename, "r")
@@ -246,6 +247,7 @@ findBaseMutations(indelsDict, gene1Alignment, gene2Alignment)
 
 showGeneAlignment = False
 showCodonOutput = False
+showBlastOutput = True
 
 print()
 print("Gene matrix and alignment")
@@ -260,3 +262,13 @@ if showCodonOutput:
     print(codon_alignment_matrix)
     print(codon1Alignment)
     print(codon2Alignment)
+
+if showBlastOutput:
+    blastAlignment1 = fileToString(BLASTALIGNMENT_FILENAME1)
+    blastAlignment2 = fileToString(BLASTALIGNMENT_FILENAME2)
+
+    blastIndelsDict = findIndels(blastAlignment1, blastAlignment2)
+    findBaseMutations(blastIndelsDict, blastAlignment1, blastAlignment1)
+    
+
+
