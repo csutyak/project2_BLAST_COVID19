@@ -243,7 +243,7 @@ findBaseMutations(indelsDict, gene1Alignment, gene2Alignment)
 
 showGeneAlignment = False
 showCodonOutput = False
-showBlastOutput = False
+showBlastOutput = True
 
 print()
 print("Gene matrix and alignment")
@@ -265,4 +265,3 @@ if showBlastOutput:
 
     blastIndelsDict = findIndels(blastAlignment1, blastAlignment2)
     findBaseMutations(blastIndelsDict, blastAlignment1, blastAlignment1)
-
