@@ -116,10 +116,6 @@ def createAlignmentMatrix(sequence1, sequence2):
             allignment_matrix[0][widthItr] = widthAdd
         lengthAdd += GAP_SCORE
 
-
-        allignment_matrix[0][widthItr] = widthAdd
-        widthAdd += GAP_SCORE
-
     # Find all scores
     for lengthItr in range(1, matrix_length):
         for widthItr in range(1, matrix_width):
