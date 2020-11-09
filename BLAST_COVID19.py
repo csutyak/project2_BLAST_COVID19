@@ -95,10 +95,10 @@ MATCH_SCORE = 1
 
 # sequence2 = "ACGGCTC"
 # sequence1 = "ATGGCCTC"
-# sequence2 = "ACCG"
-# sequence1 = "ATG"
-sequence2 = sars_n_string
-sequence1 = covid_n_string
+sequence2 = "ACCG"
+sequence1 = "ATG"
+#sequence2 = sars_n_string
+#sequence1 = covid_n_string
 
 matrix_length = len(sequence1) + 1
 matrix_width = len(sequence2) + 1
@@ -177,11 +177,22 @@ sars_codons = [(sars_n_string[x:x + 3]) for x in range(0, len(sars_n_string), 3)
 for x in range(len(sars_codons)):
     sars_codons[x] = codonTable[sars_codons[x]]
 
+sars_codons_string = ''
+
+for x in sars_codons:
+    sars_codons_string += x
+
 covid_codons = [(covid_n_string[x:x + 3]) for x in range(0, len(covid_n_string), 3)]
 
 for x in range(len(covid_codons)):
     covid_codons[x] = codonTable[covid_codons[x]]
 
-print(sars_codons)
-print(covid_codons)
+covid_codons_string = ''
 
+for x in covid_codons:
+    covid_codons_string += x
+
+print(sars_codons)
+print(sars_codons_string)
+print(covid_codons)
+print(covid_codons_string)
