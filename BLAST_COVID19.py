@@ -238,19 +238,26 @@ covid_codons_string = ''
 for x in covid_codons:
     covid_codons_string += x
 
+gene_alignment_matrix, gene1Alignment, gene2Alignment = createAlignmentMatrix(sars_n_string, covid_n_string)
+codon_alignment_matrix, codon1Alignment, codon2Alignment = createAlignmentMatrix(sars_codons_string, covid_codons_string)
 
-allignment_matrix, sequence1Alignment, sequence2Alignment = createAlignmentMatrix(covid_codons_string, sars_codons_string)
+indelsDict = findIndels(codon1Alignment, codon2Alignment)
 
-indelsDict = findIndels(sequence1Alignment, sequence2Alignment)
+findBaseMutations(indelsDict, gene1Alignment, gene2Alignment)
 
-#Fake alignments have mutations at postion 8, 22, 34 when counting from 0
-#This mimics the codon mutations at position 7 and 11
-#The first mutation should be synonymous, the other two are non synonymous
-fakeAlignment1 = "AAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAIA"
-fakeAlignment2 = "AAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-findBaseMutations(indelsDict, fakeAlignment1, fakeAlignment2)
+showGeneAlignment = False
+showCodonOutput = False
 
-print(allignment_matrix)
+print()
+print("Gene matrix and alignment")
+print(gene_alignment_matrix)
+if showGeneAlignment:
+    print(gene1Alignment)
+    print(gene2Alignment)
 
-print(sequence1Alignment)
-print(sequence2Alignment)
+if showCodonOutput:
+    print()
+    print("Codon matrix and alignment")
+    print(codon_alignment_matrix)
+    print(codon1Alignment)
+    print(codon2Alignment)
