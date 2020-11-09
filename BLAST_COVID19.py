@@ -94,10 +94,31 @@ GAP_SCORE = -2
 MATCH_SCORE = 1
 
 
+def findCodonMutations(sequence1, sequence2):
+    totalInsertions = 0
+    totalDeletions = 0
+    totalPointMutations = 0
+    totalMutations = 0
 
+    for x in range(len(sequence1)):
+        if sequence1[x] != sequence2[x]:
+            if sequence1[x] == '_':
+                print("Insertion at position ", x)
+                totalMutations += 1
+                totalInsertions += 1
+            elif sequence2[x] == '_':
+                print("Deletion at position ", x)
+                totalMutations += 1
+                totalDeletions += 1
+            else:
+                print("Point mutation at position ", x)
+                totalMutations += 1
+                totalPointMutations += 1
 
-
-
+    print("Total insertions: ", totalInsertions)
+    print("Total deletions: ", totalDeletions)
+    print("Total point mutations: ", totalPointMutations)
+    print("Total mutations: ", totalMutations)
 
 
 codonTable = {
@@ -139,21 +160,12 @@ covid_codons_string = ''
 for x in covid_codons:
     covid_codons_string += x
 
-
-
-
-
-
-
-
-
-
 # sequence2 = "ACGGCTC"
 # sequence1 = "ATGGCCTC"
 sequence2 = covid_codons_string
 sequence1 = sars_codons_string
-#sequence2 = sars_n_string
-#sequence1 = covid_n_string
+# sequence2 = sars_n_string
+# sequence1 = covid_n_string
 
 matrix_length = len(sequence1) + 1
 matrix_width = len(sequence2) + 1
@@ -199,6 +211,8 @@ sequence1Alignment = ""
 sequence2Alignment = ""
 recursiveAlignmentLine("F", lengthIndex, widthIndex)
 
+findCodonMutations(sequence1Alignment, sequence2Alignment)
+
 print(allignment_matrix)
 
 print(sequence1Alignment)
@@ -207,6 +221,3 @@ print(sequence2Alignment)
 # Codons
 # Start == "ATG"
 # Stop == "TAA" or "TAG" or "TGA"
-
-
-
