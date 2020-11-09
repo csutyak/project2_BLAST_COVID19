@@ -95,18 +95,18 @@ def createAlignmentMatrix(sequence1, sequence2):
     matrix_length = len(sequence1) + 1
     matrix_width = len(sequence2) + 1
     matrix_size = matrix_width * matrix_length
-    allignment_matrix = np.arange(matrix_size).reshape((matrix_length, matrix_width))
+    alignment_matrix = np.arange(matrix_size).reshape((matrix_length, matrix_width))
 
     # prepare first row(length) of global alignment with all _
     lengthAdd = 0
     for lengthItr in range(matrix_length):
         if lengthItr > 0:
             if sequence1[lengthItr - 1] == '_':
-                allignment_matrix[lengthItr][0] = lengthAdd * 2
+                alignment_matrix[lengthItr][0] = lengthAdd * 2
             else:
-                allignment_matrix[lengthItr][0] = lengthAdd
+                alignment_matrix[lengthItr][0] = lengthAdd
         else:
-            allignment_matrix[lengthItr][0] = lengthAdd
+            alignment_matrix[lengthItr][0] = lengthAdd
         lengthAdd += GAP_SCORE
 
     # prepare width
@@ -114,20 +114,20 @@ def createAlignmentMatrix(sequence1, sequence2):
     for widthItr in range(matrix_width):
         if widthItr > 0:
             if sequence2[widthItr - 1] == '_':
-                allignment_matrix[0][widthItr] = widthAdd * 2
+                alignment_matrix[0][widthItr] = widthAdd * 2
             else:
-                allignment_matrix[0][widthItr] = widthAdd
+                alignment_matrix[0][widthItr] = widthAdd
         else:
-            allignment_matrix[0][widthItr] = widthAdd
+            alignment_matrix[0][widthItr] = widthAdd
         lengthAdd += GAP_SCORE
 
     # Find all scores
     for lengthItr in range(1, matrix_length):
         for widthItr in range(1, matrix_width):
             # get top left and diagonal scores
-            diagonalScore = allignment_matrix[lengthItr - 1][widthItr - 1]
-            leftScore = allignment_matrix[lengthItr][widthItr - 1]
-            topScore = allignment_matrix[lengthItr - 1][widthItr]
+            diagonalScore = alignment_matrix[lengthItr - 1][widthItr - 1]
+            leftScore = alignment_matrix[lengthItr][widthItr - 1]
+            topScore = alignment_matrix[lengthItr - 1][widthItr]
 
             # get matchscore sequence1 = length sequence2 = width
             if sequence1[lengthItr - 1] == sequence2[widthItr - 1]:
@@ -140,7 +140,7 @@ def createAlignmentMatrix(sequence1, sequence2):
             maxScore = max(maxScore, topScore + GAP_SCORE)
 
             # set matrix place to maxScore and matchScore
-            allignment_matrix[lengthItr][widthItr] = maxScore
+            alignment_matrix[lengthItr][widthItr] = maxScore
 
     # CREATE ALIGNMENT LINE
     sequence1Alignment = ''
@@ -160,21 +160,21 @@ def createAlignmentMatrix(sequence1, sequence2):
             diagonalScore = LOW_SCORE
             topScore = LOW_SCORE
         else:
-            topScore = allignment_matrix[lengthItr - 1][widthItr]
+            topScore = alignment_matrix[lengthItr - 1][widthItr]
 
         if widthItr == 0:
             diagonalScore = LOW_SCORE
             leftScore = LOW_SCORE
         else:
-            leftScore = allignment_matrix[lengthItr][widthItr - 1]
+            leftScore = alignment_matrix[lengthItr][widthItr - 1]
 
         if diagonalScore is None:
-            diagonalScore = allignment_matrix[lengthItr - 1][widthItr - 1]
+            diagonalScore = alignment_matrix[lengthItr - 1][widthItr - 1]
 
         maxScore = max(diagonalScore, leftScore)
         maxScore = max(maxScore, topScore)
 
-        currentScore = allignment_matrix[lengthItr][widthItr]
+        currentScore = alignment_matrix[lengthItr][widthItr]
 
         if currentScore == diagonalScore + MATCH_SCORE or currentScore == diagonalScore + MISMATCH_SCORE:
             bestScore = "Dia"
@@ -217,7 +217,7 @@ def createAlignmentMatrix(sequence1, sequence2):
             sequence2Alignment = sequence2Alignment + sequence2[widthItr]
             widthItr += 1
 
-    return allignment_matrix, sequence1Alignment, sequence2Alignment
+    return alignment_matrix, sequence1Alignment, sequence2Alignment
 
 def convertToCodons (sequence):
     codon_list = [(sequence[x:x + 3]) for x in range(0, len(sequence), 3)]
