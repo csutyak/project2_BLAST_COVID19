@@ -87,9 +87,9 @@ codonTable = {
 }
 
 LOW_SCORE = -9999999999
-MISMATCH_SCORE = -1
-GAP_SCORE = -2
-MATCH_SCORE = 1
+MISMATCH_SCORE = -3
+GAP_SCORE = -5
+MATCH_SCORE = 2
 def createAlignmentMatrix(sequence1, sequence2):
 
     matrix_length = len(sequence1) + 1
