@@ -98,28 +98,12 @@ def createAlignmentMatrix(sequence1, sequence2):
     alignment_matrix = np.arange(matrix_size).reshape((matrix_length, matrix_width))
 
     # prepare first row(length) of global alignment with all _
-    lengthAdd = 0
     for lengthItr in range(matrix_length):
-        if lengthItr > 0:
-            if sequence1[lengthItr - 1] == '_':
-                alignment_matrix[lengthItr][0] = lengthAdd * 2
-            else:
-                alignment_matrix[lengthItr][0] = lengthAdd
-        else:
-            alignment_matrix[lengthItr][0] = lengthAdd
-        lengthAdd += GAP_SCORE
+        alignment_matrix[lengthItr][0] = lengthItr * GAP_SCORE
 
     # prepare width
-    widthAdd = 0
     for widthItr in range(matrix_width):
-        if widthItr > 0:
-            if sequence2[widthItr - 1] == '_':
-                alignment_matrix[0][widthItr] = widthAdd * 2
-            else:
-                alignment_matrix[0][widthItr] = widthAdd
-        else:
-            alignment_matrix[0][widthItr] = widthAdd
-        lengthAdd += GAP_SCORE
+        alignment_matrix[0][widthItr] = widthItr * GAP_SCORE
 
     # Find all scores
     for lengthItr in range(1, matrix_length):
