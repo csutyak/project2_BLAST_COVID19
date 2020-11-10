@@ -239,6 +239,7 @@ covid_codons_string = convertToCodons(covid_n_string)
 gene_alignment_matrix, gene1Alignment, gene2Alignment = createAlignmentMatrix(sars_n_string, covid_n_string)
 codon_alignment_matrix, codon1Alignment, codon2Alignment = createAlignmentMatrix(sars_codons_string, covid_codons_string)
 
+print("Gene data summary:")
 indelsDict = findIndels(codon1Alignment, codon2Alignment)
 findBaseMutations(indelsDict, gene1Alignment, gene2Alignment)
 
@@ -247,7 +248,7 @@ showCodonOutput = False
 showBlastOutput = True
 
 print()
-print("Gene matrix and alignment")
+print("Gene matrix")
 print(gene_alignment_matrix)
 if showGeneAlignment:
     print(gene1Alignment)
@@ -261,6 +262,8 @@ if showCodonOutput:
     print(codon2Alignment)
 
 if showBlastOutput:
+    print()
+    print("Summary of BLAST data:")
     blastAlignment1Codon = fileToString(BLASTALIGNMENT_CODON_FILENAME1)
     blastAlignment2Codon = fileToString(BLASTALIGNMENT_CODON_FILENAME2)
 
